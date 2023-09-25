@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos para o histórico */
+        .historico {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 0.89);
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+    <title>Histórico de Tarefas Concluídas</title>
+</head>
+<body>
+    <!-- Título da página de histórico -->
+    <h2>Histórico de Tarefas Concluídas</h2>
+    
+    <!-- Lista de tarefas concluídas -->
+    <ul>
+        {% for tarefa in historico_tarefas %}
+        <li>{{ tarefa | safe }}</li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Link para voltar para a lista de tarefas pendentes -->
+    <a href="/">Voltar para a Lista de Tarefas</a>
+</body>
+</html>

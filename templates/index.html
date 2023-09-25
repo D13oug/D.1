@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    /* Estilos para o cabeçalho */
+        h1 {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: medium;
+            color: white; /* Define a cor do texto no cabeçalho */
+            background-color: rgba(0, 0, 0, 0.7); /* Define uma cor de fundo semi-transparente para o cabeçalho */
+            padding: 10px;
+        }
+
+        /* Estilos para o formulário */
+        .form {
+            background-color: rgba(0, 0, 0, 0.7); /* Define uma cor de fundo semi-transparente para o formulário */
+            color: #fff; /* Define a cor do texto dentro do formulário */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Estilos para as bolinhas de categoria */
+        .bolinha {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .vermelha {
+            background-color: red;
+        }
+
+        .verde {
+            background-color: green;
+        }
+
+        .amarela {
+            background-color: yellow;
+        }
+
+        /* Estilos para as notificações */
+        .notificacao {
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Estilos para o ranking */
+        .ranking {
+            background-color: rgba(0, 0, 0, 0.7); /* Define uma cor de fundo semi-transparente para o ranking */
+            color: #fff; /* Define a cor do texto no ranking */
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+    <title>Lista de Tarefas for Luzir Software</title>
+</head>
+<body>
+    <!-- Título da página -->
+    <h1>Lista de Tarefas for Luzir Software</h1>
+    
+    <!-- Formulário para adicionar tarefas -->
+    <div class="form">
+        <form action="/adicionar_tarefa" method="POST">
+            <input type="text" name="tarefa" placeholder="Digite uma nova tarefa" required>
+            <select name="categoria">
+                <option value="urgente">Urgente</option>
+                <option value="sem_pressa">Sem Pressa</option>
+                <option value="com_prazo">Com Prazo</option>
+            </select>
+            <button type="submit">Adicionar Tarefa</button>
+        </form>
+    </div>
+    
+    <!-- Notificações -->
+    <div class="notificacao">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+    <!-- Lista de tarefas pendentes -->
+    <ul>
+        {% for tarefa in tarefas %}
+        <li>
+            {{ tarefa | safe }}
+            <a href="/marcar_concluida/{{ loop.index - 1 }}">Marcar como concluída</a>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Ranking de tarefas -->
+    <div class="ranking">
+        <p>Tarefas Concluídas: {{ historico_tarefas|length }}</p>
+        <p>Tarefas Pendentes: {{ tarefas|length }}</p>
+        <a href="/historico">Histórico</a>
+    </div>
+</body>
+</html>
